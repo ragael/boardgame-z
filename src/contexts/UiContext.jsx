@@ -7,7 +7,7 @@ export const useUiContext = () => {
 };
 
 export const UiProvider = ({ children }) => {
-  const [pageIndex, setPageIndex] = useState(0);
+  const [page, setPage] = useState("");
   const [cardType, setCardType] = useState("");
   const [selectIds, setSelectIds] = useState([]);
   const [cardPlace, setCardPlace] = useState("");
@@ -15,8 +15,8 @@ export const UiProvider = ({ children }) => {
   return (
     <UiContext.Provider
       value={{
-        pageIndex,
-        setPageIndex,
+        page,
+        setPage,
         cardType,
         setCardType,
         selectIds,

@@ -115,10 +115,13 @@ export const GameProvider = ({ children }) => {
   const getCardByPlace = (place) =>
     cards.find((card) => card.place === place) || false;
 
+  const getCardsByPlace = (place) =>
+    cards.filter((card) => card.place === place);
+
   const setCard = (id, place, angle) => {
     setCards((prevCards) =>
       prevCards.map((card) =>
-        card.id === id ? { ...card, place, angle } : card
+        card.id === id ? { ...card, place: place, angle: angle } : card
       )
     );
   };
@@ -129,8 +132,9 @@ export const GameProvider = ({ children }) => {
         cards,
         newMap,
         getCardById,
-        getCardsByType,
         getCardByPlace,
+        getCardsByType,
+        getCardsByPlace,
         setCard,
       }}
     >

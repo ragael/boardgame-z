@@ -1,44 +1,29 @@
-import { useState } from "react";
-import { CardList } from "./components/CardList";
+import { useGameContext } from "./contexts/GameContext";
+import { useUiContext } from "./contexts/UiContext";
+import { EditMap } from "./pages/EditMap";
 
 function App() {
-  const [open, setOpen] = useState(false);
-  const [type, setType] = useState("");
+  const { page, setPage } = useUiContext();
+  const { newMap } = useGameContext();
 
-  const handleOpenModal = () => {
-    setType("map");
-    setOpen(true);
-  };
-
-  const handleCancelModal = () => {
-    setOpen(false);
-    setTimeout(() => {
-      setType("");
-    }, 500);
-  };
-  const handleConfirmModal = (selects) => {
-    handleCancelModal();
-    console.log(selects);
+  const handleEditMap = () => {
+    newMap();
+    setPage("EditMap");
   };
 
   return (
     <>
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={() => handleOpenModal()}
-      >
-        Button
-      </button>
-      <CardList
-        title="Maps"
-        open={open}
-        place={""}
-        single={true}
-        type={type}
-        onCancel={() => handleCancelModal()}
-        onConfirm={handleConfirmModal}
-      />
+      {page == "EditMap" ? (
+        <EditMap />
+      ) : (
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => handleEditMap()}
+        >
+          Edit Map
+        </button>
+      )}
     </>
   );
 }

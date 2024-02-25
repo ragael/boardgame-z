@@ -19,16 +19,19 @@ export const CardList = ({
   const [modal, setModal] = useState(null);
   const [reOpen, setReOpen] = useState(false);
   const modalRef = useRef(null);
+  const [allNone, setAllNone] = useState("");
 
   useEffect(() => {
     setModal(new bootstrap.Modal(modalRef.current));
   }, []);
 
   useEffect(() => {
+    setAllNone("All");
     setLocalCards(
       getCardsByType(type).map((card) => ({
         ...card,
-        select: card.place == place && ((place != "" && single) || !single),
+        select: card.place == place && place != "",
+        disabled: card.place != place && card.place != "",
       }))
     );
   }, [type]);
@@ -52,18 +55,32 @@ export const CardList = ({
   };
 
   const handleSelection = (id) => {
-    if (single) {
+    if (id == "ALL") {
+      setLocalCards((prevCards) =>
+        prevCards.map((card) => ({ ...card, select: true }))
+      );
+      setAllNone("None");
+    } else if (id == "NONE") {
+      setLocalCards((prevCards) =>
+        prevCards.map((card) => ({ ...card, select: false }))
+      );
+      setAllNone("All");
+    } else if (id == "INVERT") {
+      setLocalCards((prevCards) =>
+        prevCards.map((card) => ({ ...card, select: !card.select }))
+      );
+    } else if (!single) {
       setLocalCards((prevCards) =>
         prevCards.map((card) =>
-          card.id === id
-            ? { ...card, select: !card.select }
-            : { ...card, select: false }
+          card.id === id ? { ...card, select: !card.select } : { ...card }
         )
       );
     } else {
       setLocalCards((prevCards) =>
         prevCards.map((card) =>
-          card.id === id ? { ...card, select: !card.select } : { ...card }
+          card.id === id
+            ? { ...card, select: !card.select }
+            : { ...card, select: false }
         )
       );
     }
@@ -85,6 +102,16 @@ export const CardList = ({
   };
 
   const handleConfirm = () => {
+    const ajustAngle = (a) => {
+      while (a >= 360) {
+        a -= 360;
+      }
+      return a;
+    };
+
+    setLocalCards((prevCards) =>
+      prevCards.map((card) => ({ ...card, angle: ajustAngle(card.angle) }))
+    );
     onConfirm(localCards.filter((card) => card.select));
   };
 
@@ -115,15 +142,24 @@ export const CardList = ({
                       <button
                         type="button"
                         className={`btn ${
-                          card.select ? "btn-primary" : "btn-outline-primary"
+                          card.disabled
+                            ? "btn-secondary"
+                            : card.select
+                            ? "btn-primary"
+                            : "btn-outline-primary"
                         }`}
+                        disabled={card.disabled}
                         onClick={() => handleSelection(card.id)}
                       >
                         {card.name}
                       </button>
                       <button
                         type="button"
-                        className="btn btn-outline-primary"
+                        className={`btn ${
+                          card.disabled
+                            ? "btn-secondary"
+                            : "btn-outline-primary"
+                        }`}
                         data-bs-toggle="modal"
                         data-bs-target="#modalZoom"
                       >
@@ -141,7 +177,12 @@ export const CardList = ({
                         />
                       </button>
                       <button
-                        className="btn btn-outline-primary"
+                        className={`btn ${
+                          card.disabled
+                            ? "btn-secondary"
+                            : "btn-outline-primary"
+                        }`}
+                        disabled={card.disabled}
                         onClick={() => handleRotate(card.id)}
                       >
                         Rotate
@@ -159,6 +200,24 @@ export const CardList = ({
               >
                 Cancel
               </button>
+              {!single && (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => handleSelection(allNone.toUpperCase())}
+                  >
+                    {allNone}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => handleSelection("INVERT")}
+                  >
+                    Invert
+                  </button>
+                </>
+              )}
               <button
                 type="button"
                 className="btn btn-primary"
