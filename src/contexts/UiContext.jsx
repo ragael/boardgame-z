@@ -11,6 +11,13 @@ export const UiProvider = ({ children }) => {
   const [cardType, setCardType] = useState("");
   const [selectIds, setSelectIds] = useState([]);
   const [cardPlace, setCardPlace] = useState("");
+  const [globalTheme, setGlobalTheme] = useState("");
+
+  const toggleTheme = () => {
+    const newTheme = globalTheme == "" ? "dark" : "";
+    document.querySelector("html").setAttribute("data-bs-theme", newTheme);
+    setGlobalTheme(newTheme);
+  };
 
   return (
     <UiContext.Provider
@@ -23,6 +30,8 @@ export const UiProvider = ({ children }) => {
         setSelectIds,
         cardPlace,
         setCardPlace,
+        globalTheme,
+        toggleTheme,
       }}
     >
       {children}

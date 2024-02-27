@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { CardList } from "../components/CardList";
+import { useEffect, useState } from "react";
+import "./Styles.css";
 import { useUiContext } from "../contexts/UiContext";
 import { useGameContext } from "../contexts/GameContext";
 import { createUseStyles } from "react-jss";
@@ -25,14 +25,21 @@ const useStyles = createUseStyles({
 
 export const EditMap = () => {
   const classes = useStyles();
+
   const { getCardByPlace, getCardsByPlace, setCard } = useGameContext();
-  const { setPage } = useUiContext();
+  const { page, setPage } = useUiContext();
+
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
   const [place, setPlace] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleBackClick = () => {
-    setPage("");
+  useEffect(() => {
+    setIsVisible(page == "EditMap");
+  }, [page]);
+
+  const handleBack = () => {
+    setPage("Config");
   };
 
   const handleOpenModal = (l, c) => {
@@ -76,39 +83,41 @@ export const EditMap = () => {
   };
 
   return (
-    <div className="position-relative vh-100 overflow-auto">
-      <table className="mt-3 mb-5 mx-auto">
-        <tbody>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((l) => (
-            <tr key={l}>
-              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((c) => (
-                <td
-                  key={c}
-                  className={"p-0 border " + classes.cell}
-                  onClick={() => handleOpenModal(l, c)}
-                >
-                  {getMapImage(l, c)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div
-        className="btn-group position-fixed left-0 bottom-0 w-100"
-        role="group"
-      >
+    <div
+      className={`card position-fixed start-0 top-0 w-100 h-100 ${
+        isVisible ? "fadeIn" : "fadeOut"
+      }`}
+    >
+      <h5 className="card-header">Edit Map</h5>
+      <div className="card-body h-100 overflow-auto">
+        <table className="mx-auto">
+          <tbody>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((l) => (
+              <tr key={l}>
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((c) => (
+                  <td
+                    key={c}
+                    className={"p-0 border " + classes.cell}
+                    onClick={() => handleOpenModal(l, c)}
+                  >
+                    {getMapImage(l, c)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="card-footer text-body-secondary">
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => handleBackClick()}
+          onClick={() => handleBack()}
         >
           Back
         </button>
       </div>
-
-      <CardList
+      {/* <CardList
         title="Maps"
         open={open}
         place={place}
@@ -116,7 +125,7 @@ export const EditMap = () => {
         type={type}
         onCancel={() => handleCancelModal()}
         onConfirm={handleConfirmModal}
-      />
+      /> */}
     </div>
   );
 };
