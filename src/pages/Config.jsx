@@ -106,7 +106,7 @@ export const Config = () => {
       <div className="card-footer text-body-secondary">
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-primary me-2"
           onClick={() => handleBack()}
         >
           Back

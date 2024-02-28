@@ -27,11 +27,8 @@ export const EditMap = () => {
   const classes = useStyles();
 
   const { getCardByPlace, getCardsByPlace, setCard } = useGameContext();
-  const { page, setPage } = useUiContext();
+  const { page, setPage, setCardList, cardList } = useUiContext();
 
-  const [open, setOpen] = useState(false);
-  const [type, setType] = useState("");
-  const [place, setPlace] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -42,28 +39,27 @@ export const EditMap = () => {
     setPage("Config");
   };
 
-  const handleOpenModal = (l, c) => {
-    setPlace(l + "x" + c);
-    setType("map");
-    setOpen(true);
-  };
-
-  const handleCancelModal = () => {
-    setOpen(false);
-    setTimeout(() => {
-      setType("");
-    }, 500);
+  const handleCellClick = (l, c) => {
+    setCardList((prev) => ({
+      ...prev,
+      title: "Maps",
+      place: l + "x" + c,
+      single: true,
+      type: "map",
+      onConfirm: handleConfirmModal,
+    }));
+    setPage("CardList");
   };
 
   const handleConfirmModal = async (selects) => {
-    let cards = getCardsByPlace(place);
+    let cards = getCardsByPlace(cardList.place);
+    console.log(cards, selects);
     for (const card of cards) {
       setCard(card.id, "", 0);
     }
     for (const card of selects) {
-      setCard(card.id, place, card.angle);
+      setCard(card.id, cardList.place, card.angle);
     }
-    handleCancelModal();
   };
 
   const getMapImage = (l, c) => {
@@ -98,7 +94,7 @@ export const EditMap = () => {
                   <td
                     key={c}
                     className={"p-0 border " + classes.cell}
-                    onClick={() => handleOpenModal(l, c)}
+                    onClick={() => handleCellClick(l, c)}
                   >
                     {getMapImage(l, c)}
                   </td>
@@ -111,21 +107,12 @@ export const EditMap = () => {
       <div className="card-footer text-body-secondary">
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-primary me-2"
           onClick={() => handleBack()}
         >
           Back
         </button>
       </div>
-      {/* <CardList
-        title="Maps"
-        open={open}
-        place={place}
-        single={true}
-        type={type}
-        onCancel={() => handleCancelModal()}
-        onConfirm={handleConfirmModal}
-      /> */}
     </div>
   );
 };

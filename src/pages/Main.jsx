@@ -21,12 +21,12 @@ export const Main = () => {
         isVisible ? "fadeIn" : "fadeOut"
       }`}
     >
-      <h5 className="card-header">Zombicide</h5>
+      {/* <h5 className="card-header">Zombicide</h5> */}
       <div className="card-body h-100"></div>
       <div className="card-footer text-body-secondary">
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-primary me-2"
           onClick={() => handleConfig()}
         >
           Setup

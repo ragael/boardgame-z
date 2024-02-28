@@ -8,10 +8,17 @@ export const useUiContext = () => {
 
 export const UiProvider = ({ children }) => {
   const [page, setPage] = useState("");
-  const [cardType, setCardType] = useState("");
-  const [selectIds, setSelectIds] = useState([]);
-  const [cardPlace, setCardPlace] = useState("");
+  // const [cardType, setCardType] = useState("");
+  // const [selectIds, setSelectIds] = useState([]);
+  // const [cardPlace, setCardPlace] = useState("");
   const [globalTheme, setGlobalTheme] = useState("");
+  const [cardList, setCardList] = useState({
+    title: "",
+    place: "",
+    single: true,
+    type: "",
+    onConfirm: null,
+  });
 
   const toggleTheme = () => {
     const newTheme = globalTheme == "" ? "dark" : "";
@@ -24,14 +31,16 @@ export const UiProvider = ({ children }) => {
       value={{
         page,
         setPage,
-        cardType,
-        setCardType,
-        selectIds,
-        setSelectIds,
-        cardPlace,
-        setCardPlace,
+        // cardType,
+        // setCardType,
+        // selectIds,
+        // setSelectIds,
+        // cardPlace,
+        // setCardPlace,
         globalTheme,
         toggleTheme,
+        cardList,
+        setCardList,
       }}
     >
       {children}
