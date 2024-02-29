@@ -3,7 +3,8 @@ import "./Styles.css";
 import { useUiContext } from "../contexts/UiContext";
 
 export const Config = () => {
-  const { page, setPage, globalTheme, toggleTheme } = useUiContext();
+  const { page, changePage, changePageBack, globalTheme, toggleTheme } =
+    useUiContext();
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -12,11 +13,15 @@ export const Config = () => {
   }, [page]);
 
   const handleBack = () => {
-    setPage("");
+    changePageBack();
   };
 
   const handleEditMap = () => {
-    setPage("EditMap");
+    changePage("EditMap");
+  };
+
+  const handleEditPlayers = () => {
+    changePage("EditPlayers");
   };
 
   return (
@@ -26,9 +31,9 @@ export const Config = () => {
       }`}
     >
       <h5 className="card-header">Setup</h5>
-      <div className="card-body h-100 d-flex justify-content-center align-items-center">
+      <div className="card-body h-100 overflow-auto d-flex justify-content-center align-items-center">
         <div className="row text-center">
-          <div className="col-4 mb-3">
+          <div className="col-4">
             <button
               type="button"
               className="btn btn-outline-primary"
@@ -42,42 +47,48 @@ export const Config = () => {
               />
             </button>
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-4">
+            <button type="button" className="btn btn-outline-primary"
+              onClick={() => handleEditPlayers()}>
+              <img
+                width="64"
+                height="64"
+                src="https://img.icons8.com/dusk/64/conference-call.png"
+                alt="conference-call"
+              />
+            </button>
+          </div>
+          <div className="col-4">
             <button type="button" className="btn btn-outline-primary">
               ???
             </button>
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-4 my-2">
             <button type="button" className="btn btn-outline-primary">
               ???
             </button>
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-4 my-2">
             <button type="button" className="btn btn-outline-primary">
               ???
             </button>
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-4 my-2">
             <button type="button" className="btn btn-outline-primary">
               ???
             </button>
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-4">
             <button type="button" className="btn btn-outline-primary">
               ???
             </button>
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-4">
             <button type="button" className="btn btn-outline-primary">
               ???
             </button>
           </div>
-          <div className="col-4 mb-3">
-            <button type="button" className="btn btn-outline-primary">
-              ???
-            </button>
-          </div>
-          <div className="col-4 mb-3">
+          <div className="col-4">
             <button
               type="button"
               className="btn btn-outline-primary"
@@ -103,10 +114,10 @@ export const Config = () => {
           </div>
         </div>
       </div>
-      <div className="card-footer text-body-secondary">
+      <div className="card-footer text-body-secondary text-end">
         <button
           type="button"
-          className="btn btn-primary me-2"
+          className="btn btn-danger"
           onClick={() => handleBack()}
         >
           Back

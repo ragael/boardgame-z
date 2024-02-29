@@ -26,8 +26,8 @@ const useStyles = createUseStyles({
 export const EditMap = () => {
   const classes = useStyles();
 
-  const { getCardByPlace, getCardsByPlace, setCard } = useGameContext();
-  const { page, setPage, setCardList, cardList } = useUiContext();
+  const { getCardByPlace } = useGameContext();
+  const { page, changePage, changePageBack, setCardList } = useUiContext();
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -36,7 +36,7 @@ export const EditMap = () => {
   }, [page]);
 
   const handleBack = () => {
-    setPage("Config");
+    changePageBack();
   };
 
   const handleCellClick = (l, c) => {
@@ -46,20 +46,9 @@ export const EditMap = () => {
       place: l + "x" + c,
       single: true,
       type: "map",
-      onConfirm: handleConfirmModal,
+      rotate: true,
     }));
-    setPage("CardList");
-  };
-
-  const handleConfirmModal = async (selects) => {
-    let cards = getCardsByPlace(cardList.place);
-    console.log(cards, selects);
-    for (const card of cards) {
-      setCard(card.id, "", 0);
-    }
-    for (const card of selects) {
-      setCard(card.id, cardList.place, card.angle);
-    }
+    changePage("CardList");
   };
 
   const getMapImage = (l, c) => {
@@ -104,10 +93,10 @@ export const EditMap = () => {
           </tbody>
         </table>
       </div>
-      <div className="card-footer text-body-secondary">
+      <div className="card-footer text-body-secondary text-end">
         <button
           type="button"
-          className="btn btn-primary me-2"
+          className="btn btn-danger"
           onClick={() => handleBack()}
         >
           Back
