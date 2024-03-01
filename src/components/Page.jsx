@@ -26,12 +26,12 @@ export const Page = () => {
       <div className="card-footer text-body-secondary text-end">
         <button
           type="button"
-          className="btn btn-danger me-2"
+          className="btn btn-danger"
           onClick={() => handleBack()}
         >
           Back
         </button>
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-primary ms-2">
           Confirm
         </button>
       </div>

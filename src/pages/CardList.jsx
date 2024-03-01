@@ -113,15 +113,15 @@ export const CardList = () => {
       prevCards.map((card) => ({ ...card, angle: ajustAngle(card.angle) }))
     );
 
-    if (cardList.single) {
-      let cards = getCardsByPlace(cardList.place);
-      for (const card of cards) {
-        setCard(card.id, "", 0);
-      }
+    let cards = getCardsByPlace(cardList.place).filter(
+      (c) => c.type == cardList.type
+    );
+    for (const card of cards) {
+      setCard(card.id, "", 0);
+    }
 
-      for (const card of localCards.filter((card) => card.select)) {
-        setCard(card.id, cardList.place, card.angle);
-      }
+    for (const card of localCards.filter((card) => card.select)) {
+      setCard(card.id, cardList.place, card.angle);
     }
 
     handleBack();
@@ -144,7 +144,7 @@ export const CardList = () => {
               <div className="btn-group-vertical w-100" role="group">
                 <button
                   type="button"
-                  className={`btn ${
+                  className={`text-capitalize btn ${
                     card.disabled
                       ? "btn-secondary"
                       : card.select
@@ -201,13 +201,13 @@ export const CardList = () => {
         </button>
         {!cardList.single && (
           <>
-            <button
+            {/* <button
               type="button"
               className="btn btn-outline-primary ms-2"
               onClick={() => handleSelection(allNone.toUpperCase())}
             >
               {allNone}
-            </button>
+            </button> */}
             <button
               type="button"
               className="btn btn-outline-primary ms-2"

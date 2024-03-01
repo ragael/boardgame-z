@@ -16,14 +16,6 @@ export const Config = () => {
     changePageBack();
   };
 
-  const handleEditMap = () => {
-    changePage("EditMap");
-  };
-
-  const handleEditPlayers = () => {
-    changePage("EditPlayers");
-  };
-
   return (
     <div
       className={`card position-fixed start-0 top-0 w-100 h-100 ${
@@ -37,7 +29,7 @@ export const Config = () => {
             <button
               type="button"
               className="btn btn-outline-primary"
-              onClick={() => handleEditMap()}
+              onClick={() => changePage("EditMap")}
             >
               <img
                 width="64"
@@ -48,8 +40,11 @@ export const Config = () => {
             </button>
           </div>
           <div className="col-4">
-            <button type="button" className="btn btn-outline-primary"
-              onClick={() => handleEditPlayers()}>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={() => changePage("EditPlayers")}
+            >
               <img
                 width="64"
                 height="64"
@@ -59,36 +54,34 @@ export const Config = () => {
             </button>
           </div>
           <div className="col-4">
-            <button type="button" className="btn btn-outline-primary">
-              ???
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={() => changePage("EditEquipaments")}
+            >
+              <img
+                width="64"
+                height="64"
+                src="https://img.icons8.com/dusk/64/maintenance.png"
+                alt="maintenance"
+              />
             </button>
           </div>
           <div className="col-4 my-2">
-            <button type="button" className="btn btn-outline-primary">
-              ???
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={() => changePage("EditSpawn")}
+            >
+              <img
+                width="64"
+                height="64"
+                src="https://img.icons8.com/dusk/64/frankensteins-monster--v1.png"
+                alt="frankensteins-monster--v1"
+              />
             </button>
           </div>
           <div className="col-4 my-2">
-            <button type="button" className="btn btn-outline-primary">
-              ???
-            </button>
-          </div>
-          <div className="col-4 my-2">
-            <button type="button" className="btn btn-outline-primary">
-              ???
-            </button>
-          </div>
-          <div className="col-4">
-            <button type="button" className="btn btn-outline-primary">
-              ???
-            </button>
-          </div>
-          <div className="col-4">
-            <button type="button" className="btn btn-outline-primary">
-              ???
-            </button>
-          </div>
-          <div className="col-4">
             <button
               type="button"
               className="btn btn-outline-primary"

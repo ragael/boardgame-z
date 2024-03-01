@@ -4,9 +4,9 @@ import { useUiContext } from "../contexts/UiContext";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
-  verticalImgFluid: {
+  showAll: {
     maxHeight: "100%",
-    width: "auto",
+    maxWidth: "100%",
   },
 });
 
@@ -44,13 +44,7 @@ export const ShowCard = () => {
         <img
           src={showCard.image}
           alt={showCard.name}
-          className={
-            originalSize
-              ? ""
-              : window.innerHeight < window.innerWidth
-              ? classes.verticalImgFluid
-              : "img-fluid"
-          }
+          className={originalSize ? "" : classes.showAll}
           style={{
             transform: `rotate(${showCard.angle}deg)`,
             cursor: "pointer",
