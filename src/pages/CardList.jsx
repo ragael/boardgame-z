@@ -64,7 +64,13 @@ export const CardList = () => {
       setAllNone("All");
     } else if (id == "INVERT") {
       setLocalCards((prevCards) =>
-        prevCards.map((card) => ({ ...card, select: !card.select }))
+        prevCards.map((card) => ({
+          ...card,
+          select:
+            card.place == cardList.place || card.place == ""
+              ? !card.select
+              : card.select,
+        }))
       );
     } else if (!cardList.single) {
       setLocalCards((prevCards) =>

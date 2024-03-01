@@ -42,7 +42,7 @@ export const EditSpawn = () => {
             <button
               type="button"
               className="btn btn-outline-primary w-100"
-              onClick={() => handleCardClick("deck", "Deck")}
+              onClick={() => handleCardClick("game", "Spawn - Game")}
             >
               <h5>Game</h5>
               <img
@@ -57,7 +57,7 @@ export const EditSpawn = () => {
             <button
               type="button"
               className="btn btn-outline-primary w-100"
-              onClick={() => handleCardClick("cemetery", "Cemetery")}
+              onClick={() => handleCardClick("cemetery", "Spawn - Cemetery")}
             >
               <h5>Cemetery</h5>
               <img

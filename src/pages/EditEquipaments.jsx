@@ -64,7 +64,7 @@ export const EditEquipaments = () => {
             <button
               type="button"
               className="btn btn-outline-primary w-100"
-              onClick={() => handleCardClick("deck", "Deck")}
+              onClick={() => handleCardClick("game", "Equipaments - Game")}
             >
               <h5>Game</h5>
               <img
@@ -79,7 +79,7 @@ export const EditEquipaments = () => {
             <button
               type="button"
               className="btn btn-outline-primary w-100"
-              onClick={() => handleCardClick("cemetery", "Cemetery")}
+              onClick={() => handleCardClick("cemetery", "Equipaments - Cemetery")}
             >
               <h5>Cemetery</h5>
               <img
