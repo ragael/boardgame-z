@@ -8,7 +8,7 @@ export const Main = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(page == "");
+    setIsVisible(page == "Main");
   }, [page]);
 
   const handleConfig = () => {
@@ -22,13 +22,7 @@ export const Main = () => {
       }`}
     >
       {/* <h5 className="card-header">Zombicide</h5> */}
-      <div className="card-body h-100 d-flex overflow-auto justify-content-center align-items-center">
-        <img
-          src="Zombicide-2nd-logo.png"
-          alt="Zombicide-2nd-logo.png"
-          className="img-fluid"
-        />
-      </div>
+      <div className="card-body h-100 d-flex overflow-auto justify-content-center align-items-center"></div>
       <div className="card-footer text-body-secondary">
         <button
           type="button"

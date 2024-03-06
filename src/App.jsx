@@ -6,15 +6,17 @@ import { EditPlayers } from "./pages/EditPlayers";
 import { EditSpawn } from "./pages/EditSpawn";
 import { Main } from "./pages/Main";
 import { ShowCard } from "./pages/ShowCard";
+import { SplashScreen } from "./pages/SplashScreen";
 
 function App() {
   return (
     <>
+      <SplashScreen />
       <Main />
       <Config />
       <EditMap />
       <CardList />
-      <ShowCard />
+      {/* <ShowCard /> */}
       <EditPlayers />
       <EditEquipaments />
       <EditSpawn />

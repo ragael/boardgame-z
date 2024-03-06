@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import "./Styles.css";
 import { useGameContext } from "../contexts/GameContext";
 import { useUiContext } from "../contexts/UiContext";
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  showAll: {
+    maxHeight: "100%",
+    maxWidth: "100%",
+  },
+});
 
 export const CardList = () => {
   const {
@@ -18,6 +26,12 @@ export const CardList = () => {
   const [localCards, setLocalCards] = useState([]);
   const [allNone, setAllNone] = useState("");
   const [viewCard, setViewCard] = useState(false);
+  const [cardName, setCardName] = useState("");
+  const [cardImage, setCardImage] = useState("");
+  const [cardAngle, setCardAngle] = useState(0);
+  const [cardOriginalSize, setCardOriginalSize] = useState(false);
+
+  const classes = useStyles();
 
   useEffect(() => {
     setIsVisible(page == "CardList");
@@ -93,13 +107,18 @@ export const CardList = () => {
   };
 
   const handleShowCard = (src, alt, angle) => {
-    setShowCard((prev) => ({
-      name: alt,
-      image: src,
-      angle: angle,
-    }));
-    changePage("ShowCard");
-    setViewCard(true);
+    setCardName(alt);
+    setCardImage(src);
+    setCardAngle(angle);
+    setCardOriginalSize(false);
+
+    // setShowCard((prev) => ({
+    //   name: alt,
+    //   image: src,
+    //   angle: angle,
+    // }));
+    // changePage("ShowCard");
+    // setViewCard(true);
   };
 
   const handleBack = () => {
@@ -134,103 +153,136 @@ export const CardList = () => {
   };
 
   return (
-    <div
-      className={`card position-fixed start-0 top-0 w-100 h-100 ${
-        isVisible ? "fadeIn" : "fadeOut"
-      }`}
-    >
-      <h5 className="card-header">{cardList.title}</h5>
-      <div className="card-body h-100 overflow-auto">
-        <div className="row">
-          {localCards.map((card) => (
-            <div
-              className="col-6 col-sm-4 col-md-3 col-lg-2 mb-3"
-              key={card.id}
-            >
-              <div className="btn-group-vertical w-100" role="group">
-                <button
-                  type="button"
-                  className={`text-capitalize btn ${
-                    card.disabled
-                      ? "btn-secondary"
-                      : card.select
-                      ? "btn-primary"
-                      : "btn-outline-primary"
-                  }`}
-                  disabled={card.disabled}
-                  onClick={() => handleSelection(card.id)}
-                >
-                  {card.name}
-                </button>
-                <button
-                  type="button"
-                  className={`btn ${
-                    card.disabled ? "btn-secondary" : "btn-outline-primary"
-                  }`}
-                  onClick={() =>
-                    handleShowCard(card.img, card.name, card.angle)
-                  }
-                >
-                  <img
-                    className="img-fluid"
-                    src={card.img}
-                    alt={card.alt}
-                    style={{
-                      transition: "transform 250ms linear",
-                      transform: `rotate(${card.angle}deg)`,
-                    }}
-                  />
-                </button>
-                {cardList.rotate && (
+    <>
+      <div
+        className={`card position-fixed start-0 top-0 w-100 h-100 ${
+          isVisible ? "fadeIn" : "fadeOut"
+        }`}
+      >
+        <h5 className="card-header">{cardList.title}</h5>
+        <div className="card-body h-100 overflow-auto">
+          <div className="row">
+            {localCards.map((card) => (
+              <div
+                className="col-6 col-sm-4 col-md-3 col-lg-2 mb-3"
+                key={card.id}
+              >
+                <div className="btn-group-vertical w-100" role="group">
                   <button
+                    type="button"
+                    className={`text-capitalize btn ${
+                      card.disabled
+                        ? "btn-secondary"
+                        : card.select
+                        ? "btn-primary"
+                        : "btn-outline-primary"
+                    }`}
+                    disabled={card.disabled}
+                    onClick={() => handleSelection(card.id)}
+                  >
+                    {card.name}
+                  </button>
+                  <button
+                    type="button"
                     className={`btn ${
                       card.disabled ? "btn-secondary" : "btn-outline-primary"
                     }`}
-                    disabled={card.disabled}
-                    onClick={() => handleRotate(card.id)}
+                    onClick={() =>
+                      handleShowCard(card.img, card.name, card.angle)
+                    }
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalShowCard"
                   >
-                    Rotate
+                    <img
+                      className="img-fluid"
+                      src={card.img}
+                      alt={card.alt}
+                      style={{
+                        transition: "transform 250ms linear",
+                        transform: `rotate(${card.angle}deg)`,
+                      }}
+                    />
                   </button>
-                )}
+                  {cardList.rotate && (
+                    <button
+                      className={`btn ${
+                        card.disabled ? "btn-secondary" : "btn-outline-primary"
+                      }`}
+                      disabled={card.disabled}
+                      onClick={() => handleRotate(card.id)}
+                    >
+                      Rotate
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="card-footer text-body-secondary text-end">
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => handleBack()}
-        >
-          Back
-        </button>
-        {!cardList.single && (
-          <>
-            {/* <button
+        <div className="card-footer text-body-secondary text-end">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => handleBack()}
+          >
+            Back
+          </button>
+          {!cardList.single && (
+            <>
+              {/* <button
               type="button"
               className="btn btn-outline-primary ms-2"
               onClick={() => handleSelection(allNone.toUpperCase())}
             >
               {allNone}
             </button> */}
-            <button
-              type="button"
-              className="btn btn-outline-primary ms-2"
-              onClick={() => handleSelection("INVERT")}
-            >
-              Invert
-            </button>
-          </>
-        )}
-        <button
-          type="button"
-          className="btn btn-primary ms-2"
-          onClick={() => handleConfirm()}
-        >
-          Confirm
-        </button>
+              <button
+                type="button"
+                className="btn btn-outline-primary ms-2"
+                onClick={() => handleSelection("INVERT")}
+              >
+                Invert
+              </button>
+            </>
+          )}
+          <button
+            type="button"
+            className="btn btn-primary ms-2"
+            onClick={() => handleConfirm()}
+          >
+            Confirm
+          </button>
+        </div>
       </div>
-    </div>
+      <div className="modal" tabindex="-1" id="modalShowCard">
+        <div className="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">{cardName}</h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body overflow-auto text-center">
+              {cardImage != "" && (
+                <img
+                  src={cardImage}
+                  alt={cardName}
+                  className={cardOriginalSize ? "" : classes.showAll}
+                  style={{
+                    transform: `rotate(${cardAngle}deg)`,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setCardOriginalSize((prev) => !prev)}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
