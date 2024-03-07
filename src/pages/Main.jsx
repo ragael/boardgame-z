@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Styles.css";
 import { useUiContext } from "../contexts/UiContext";
+import { Map } from "../components/Map";
 
 export const Main = () => {
   const { page, changePage } = useUiContext();
@@ -22,7 +23,9 @@ export const Main = () => {
       }`}
     >
       {/* <h5 className="card-header">Zombicide</h5> */}
-      <div className="card-body h-100 d-flex overflow-auto justify-content-center align-items-center"></div>
+      <div className="card-body h-100 overflow-auto position-relative">
+        <Map />
+      </div>
       <div className="card-footer text-body-secondary">
         <button
           type="button"

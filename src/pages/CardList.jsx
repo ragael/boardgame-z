@@ -254,7 +254,7 @@ export const CardList = () => {
           </button>
         </div>
       </div>
-      <div className="modal" tabindex="-1" id="modalShowCard">
+      <div className="modal" tabIndex="-1" id="modalShowCard">
         <div className="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">

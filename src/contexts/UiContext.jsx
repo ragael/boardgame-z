@@ -54,7 +54,9 @@ export const UiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    setPage(pageList.slice(-1));
+    if (pageList.length > 1) {
+      setPage(pageList.slice(-1));
+    }
   }, [pageList]);
 
   const toggleTheme = () => {
