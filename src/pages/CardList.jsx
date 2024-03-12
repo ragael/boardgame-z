@@ -36,18 +36,14 @@ export const CardList = () => {
   useEffect(() => {
     setIsVisible(page == "CardList");
     if (page == "CardList") {
-      if (viewCard) {
-        setViewCard(false);
-      } else {
-        setAllNone("All");
-        setLocalCards(
-          getCardsByType(cardList.type).map((card) => ({
-            ...card,
-            select: card.place == cardList.place && cardList.place != "",
-            disabled: card.place != cardList.place && card.place != "",
-          }))
-        );
-      }
+      setAllNone("All");
+      setLocalCards(
+        getCardsByType(cardList.type).map((card) => ({
+          ...card,
+          select: card.place == cardList.place && cardList.place != "",
+          disabled: card.place != cardList.place && card.place != "",
+        }))
+      );
     }
   }, [page, cardList]);
 
@@ -111,14 +107,7 @@ export const CardList = () => {
     setCardImage(src);
     setCardAngle(angle);
     setCardOriginalSize(false);
-
-    // setShowCard((prev) => ({
-    //   name: alt,
-    //   image: src,
-    //   angle: angle,
-    // }));
-    // changePage("ShowCard");
-    // setViewCard(true);
+    setViewCard(true);
   };
 
   const handleBack = () => {
@@ -190,8 +179,6 @@ export const CardList = () => {
                     onClick={() =>
                       handleShowCard(card.img, card.name, card.angle)
                     }
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalShowCard"
                   >
                     <img
                       className="img-fluid"
@@ -228,22 +215,13 @@ export const CardList = () => {
             Back
           </button>
           {!cardList.single && (
-            <>
-              {/* <button
+            <button
               type="button"
               className="btn btn-outline-primary ms-2"
-              onClick={() => handleSelection(allNone.toUpperCase())}
+              onClick={() => handleSelection("INVERT")}
             >
-              {allNone}
-            </button> */}
-              <button
-                type="button"
-                className="btn btn-outline-primary ms-2"
-                onClick={() => handleSelection("INVERT")}
-              >
-                Invert
-              </button>
-            </>
+              Invert
+            </button>
           )}
           <button
             type="button"
@@ -254,7 +232,14 @@ export const CardList = () => {
           </button>
         </div>
       </div>
-      <div className="modal" tabIndex="-1" id="modalShowCard">
+      <div
+        className={`modal d-block ${viewCard ? "fadeIn" : "fadeOut"}`}
+        tabIndex="-1"
+      >
+        <div
+          className="position-absolute start-0 top-0 w-100 h-100 bg-black opacity-75"
+          onClick={() => setViewCard(false)}
+        ></div>
         <div className="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
@@ -262,8 +247,7 @@ export const CardList = () => {
               <button
                 type="button"
                 className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                onClick={() => setViewCard(false)}
               ></button>
             </div>
             <div className="modal-body overflow-auto text-center">
